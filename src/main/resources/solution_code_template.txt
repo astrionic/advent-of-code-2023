@@ -1,0 +1,18 @@
+package space.astrionic
+package adventofcode2023.solutions.day__DAY_NUMBER__
+
+import astrionic.adventofcode2023.framework.AdventSolution
+
+object Day__DAY_NUMBER__ extends AdventSolution {
+
+  writeSolution = true
+  executePart = ExecutePart.One
+
+  override def solvePart1(input: String): String = {
+    input
+  }
+
+  override def solvePart2(input: String): String = {
+    ???
+  }
+}
