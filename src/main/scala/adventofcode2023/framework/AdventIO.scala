@@ -2,7 +2,6 @@ package space.astrionic
 package adventofcode2023.framework
 
 import java.io.{File, FileNotFoundException, PrintWriter}
-
 import scala.io.Source
 import scala.util.control.Exception.catching
 
@@ -19,6 +18,21 @@ private[adventofcode2023] object AdventIO {
    */
   def readInput(fileName: String): Option[String] =
     readFile(s"${AdventConfig.inputDirectory}$fileName.txt")
+
+  /**
+   * Reads files
+   * @param path
+   *   File path
+   * @return
+   *   File contents, or None if the file doesn't exist
+   */
+  private def readFile(path: String): Option[String] =
+    catching(classOf[FileNotFoundException]).opt {
+      val source = Source.fromFile(path)
+      val text = source.getLines().mkString("\n")
+      source.close()
+      text
+    }
 
   /**
    * Reads the code template from the template file.
@@ -49,6 +63,26 @@ private[adventofcode2023] object AdventIO {
     writeFile(s"${AdventConfig.solutionDirectory}", s"$fileName.txt", content)
 
   /**
+   * @param directoryPath
+   *   Path to the directory that will contain the file to which the content should be written. Will be created if it
+   *   doesn't exist.
+   * @param fileName
+   *   Name of the file to write to. Will be created if it doesn't exist. Existing content is overwritten.
+   * @param content
+   *   Content to write.
+   */
+  private def writeFile(directoryPath: String, fileName: String, content: String): Unit = {
+    val directory = new File(directoryPath)
+    if(!directory.exists()) {
+      directory.mkdirs()
+    }
+    new PrintWriter(new File(directoryPath + fileName)) {
+      write(content)
+      close()
+    }
+  }
+
+  /**
    * Writes the code for a given day to a Scala file.
    * @param day
    *   Day
@@ -69,40 +103,5 @@ private[adventofcode2023] object AdventIO {
   def createEmptyInputFile(day: AdventDay): Unit = {
     val fileName = s"${day.dayWithLeadingZero}.txt"
     writeFile(AdventConfig.inputDirectory, fileName, "")
-  }
-
-  /**
-   * Reads files
-   * @param path
-   *   File path
-   * @return
-   *   File contents, or None if the file doesn't exist
-   */
-  private def readFile(path: String): Option[String] =
-    catching(classOf[FileNotFoundException]).opt {
-      val source = Source.fromFile(path)
-      val text = source.getLines().mkString("\n")
-      source.close()
-      text
-    }
-
-  /**
-   * @param directoryPath
-   *   Path to the directory that will contain the file to which the content should be written. Will be created if it
-   *   doesn't exist.
-   * @param fileName
-   *   Name of the file to write to. Will be created if it doesn't exist. Existing content is overwritten.
-   * @param content
-   *   Content to write.
-   */
-  private def writeFile(directoryPath: String, fileName: String, content: String): Unit = {
-    val directory = new File(directoryPath)
-    if(!directory.exists()) {
-      directory.mkdirs()
-    }
-    new PrintWriter(new File(directoryPath + fileName)) {
-      write(content)
-      close()
-    }
   }
 }

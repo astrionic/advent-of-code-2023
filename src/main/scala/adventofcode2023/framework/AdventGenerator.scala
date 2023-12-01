@@ -2,7 +2,6 @@ package space.astrionic
 package adventofcode2023.framework
 
 import java.util.Calendar
-
 import scala.Console.{RED, RESET}
 
 /**
@@ -38,6 +37,16 @@ object AdventGenerator {
     }
   }
 
+  /**
+   * @return
+   *   The day number of today's date.
+   */
+  private def today(): Int = {
+    val now = Calendar.getInstance()
+    val currentDay = now.get(Calendar.DAY_OF_MONTH)
+    currentDay
+  }
+
   private def generate(day: AdventDay): Unit = {
     val codeFile = generateSolutionCodeFile(day)
     AdventIO.writeSolutionCode(day, codeFile)
@@ -58,14 +67,4 @@ object AdventGenerator {
         println(s"$RED❌ ERROR: Couldn't read code template.")
         ""
     }
-
-  /**
-   * @return
-   *   The day number of today's date.
-   */
-  private def today(): Int = {
-    val now = Calendar.getInstance()
-    val currentDay = now.get(Calendar.DAY_OF_MONTH)
-    currentDay
-  }
 }

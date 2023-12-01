@@ -4,11 +4,6 @@ package adventofcode2023.framework
 private[adventofcode2023] object AdventConfig {
 
   /**
-   * Path to the resource directory which contains files like input, solutions and templates.
-   */
-  private val resourceDirectory = "./src/main/resources"
-
-  /**
    * Path to the directory containing the input files.
    */
   val inputDirectory = s"$resourceDirectory/input/"
@@ -49,4 +44,9 @@ private[adventofcode2023] object AdventConfig {
    * Suffix used to identify files that are related to part 2.
    */
   val partTwoSuffix = "_2"
+
+  /**
+   * Path to the resource directory which contains files like input, solutions and templates.
+   */
+  private lazy val resourceDirectory = "./src/main/resources"
 }
