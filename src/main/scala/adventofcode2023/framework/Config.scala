@@ -1,7 +1,12 @@
 package space.astrionic
 package adventofcode2023.framework
 
-private[adventofcode2023] object AdventConfig {
+private[framework] object Config {
+
+  /**
+   * Path to the resource directory which contains files like input, solutions and templates.
+   */
+  private lazy val resourceDirectory = "./src/main/resources"
 
   /**
    * Path to the directory containing the input files.
@@ -44,9 +49,4 @@ private[adventofcode2023] object AdventConfig {
    * Suffix used to identify files that are related to part 2.
    */
   val partTwoSuffix = "_2"
-
-  /**
-   * Path to the resource directory which contains files like input, solutions and templates.
-   */
-  private lazy val resourceDirectory = "./src/main/resources"
 }

@@ -1,28 +1,32 @@
 package space.astrionic
 package adventofcode2023.framework
 
+type AdventDay = "01" | "02" | "03" | "04" | "05" | "06" | "07" | "08" | "09" | "10" | "11" | "12" | "13" | "14" |
+  "15" | "16" | "17" | "18" | "19" | "20" | "21" | "22" | "23" | "24" | "25"
+
 /**
- * Identifies a day in the advent calendar
- *
- * @param dayNumber
- *   The day in the advent calendar. Guaranteed to be a number in the Range 0 to 25.
- * @param dayWithLeadingZero
- *   The day in the advent calendar, as a two-digit String. A leading zero is inserted for days with only one digit.
+ * Attempts to create an [[AdventDay]] from the given string. Adds a leading zero if necessary.
  */
-class AdventDay private (val dayNumber: Int, val dayWithLeadingZero: String)
+def toAdventDayOption(s: String): Option[AdventDay] = padLeadingZeroes(s, 2) match {
+  case day: AdventDay => Some(day)
+  case _              => None
+}
 
-object AdventDay {
+/**
+ * Attempts to create an [[AdventDay]] from the given string. Adds a leading zero if necessary.
+ */
+def toAdventDayOption(n: Int): Option[AdventDay] = toAdventDayOption(n.toString)
 
-  /**
-   * Creates a new [[AdventDay]] with the given day.
-   * @param day
-   *   The number of the day. Should be in the Range 0 to 25. Values outside this range will be set to 0 instead.
-   * @return
-   *   A new [[AdventDay]]
-   */
-  def apply(day: Int): AdventDay = {
-    val dayNumber: Int = if(day.abs > 25) 0 else day.abs
-    val dayWitheLeadingZero: String = if(dayNumber > 9) s"$dayNumber" else s"0$dayNumber"
-    new AdventDay(dayNumber, dayWitheLeadingZero)
-  }
+/**
+ * Adds leading zeroes to the front of a string. Returns the string unchanged if its length is longer than or equal to
+ * [[targetLength]].
+ * @param s
+ *   The string to pad
+ * @param targetLength
+ *   Target string length
+ * @return
+ *   Padded string
+ */
+private def padLeadingZeroes(s: String, targetLength: Int): String = {
+  ("0" * (targetLength - s.length)) ++ s
 }
