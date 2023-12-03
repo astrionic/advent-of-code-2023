@@ -5,7 +5,7 @@
 package space.astrionic
 package adventofcode2023.framework
 
-import java.io.{File, FileNotFoundException, PrintWriter}
+import java.io.{File, FileNotFoundException, FileWriter}
 import scala.io.Source
 import scala.util.control.Exception.catching
 
@@ -15,8 +15,8 @@ import scala.util.control.Exception.catching
  * @return
  *   Input file contents, or [[None]] if the file can't be found.
  */
-def readInput(fileName: String): Option[String] =
-  readFile(s"${Config.inputDirectory}$fileName.txt")
+def readInput(filename: String): Option[String] =
+  readFile(s"${Config.inputDirectory}$filename.txt")
 
 /**
  * Reads files
@@ -43,39 +43,41 @@ def readCodeTemplate(): Option[String] =
 
 /**
  * Reads the solution from the solution file.
- * @param fileName
+ * @param filename
  *   File name to read from (excluding file extension).
  * @return
  *   The solution for the given puzzle, or [[None]] if the file can't be found.
  */
-def readSolutionFromFile(fileName: String): Option[String] =
-  readFile(s"${Config.solutionDirectory}$fileName.txt")
+def readSolutionFromFile(filename: String): Option[String] =
+  readFile(s"${Config.solutionDirectory}$filename.txt")
 
 /**
  * Writes a solution to a file.
- * @param fileName
+ * @param filename
  *   File name to write to (excluding file extension).
  * @param content
  *   Contents to write.
  */
-def writeSolutionToFile(fileName: String, content: String): Unit =
-  writeFile(s"${Config.solutionDirectory}", s"$fileName.txt", content)
+def writeSolutionToFile(filename: String, content: String): Unit =
+  writeToFile(s"${Config.solutionDirectory}", s"$filename.txt", content)
 
 /**
  * @param directoryPath
  *   Path to the directory that will contain the file to which the content should be written. Will be created if it
  *   doesn't exist.
- * @param fileName
- *   Name of the file to write to. Will be created if it doesn't exist. Existing content is overwritten.
+ * @param filename
+ *   Name of the file to write to. Will be created if it doesn't exist.
  * @param content
  *   Content to write.
+ * @param append
+ *   If [[true]], new content will be appended to existing file If [[false]], the file will be completely overwritten.
  */
-private def writeFile(directoryPath: String, fileName: String, content: String): Unit = {
+def writeToFile(directoryPath: String, filename: String, content: String, append: Boolean = false): Unit = {
   val directory = new File(directoryPath)
   if(!directory.exists()) {
     directory.mkdirs()
   }
-  new PrintWriter(new File(directoryPath + fileName)) {
+  new FileWriter(new File(directoryPath + filename), append) {
     write(content)
     close()
   }
@@ -90,8 +92,8 @@ private def writeFile(directoryPath: String, fileName: String, content: String):
  */
 def writeSolutionCode(day: AdventDay, code: String): Unit = {
   val dirPath = s"${Config.solutionDirPath}${Config.solutionDirNamePrefix}$day/"
-  val fileName = s"Day$day.scala"
-  writeFile(dirPath, fileName, code)
+  val filename = s"Day$day.scala"
+  writeToFile(dirPath, filename, code)
 }
 
 /**
@@ -100,6 +102,6 @@ def writeSolutionCode(day: AdventDay, code: String): Unit = {
  *   Day
  */
 def createEmptyInputFile(day: AdventDay): Unit = {
-  val fileName = s"$day.txt"
-  writeFile(Config.inputDirectory, fileName, "")
+  val filename = s"$day.txt"
+  writeToFile(Config.inputDirectory, filename, "")
 }

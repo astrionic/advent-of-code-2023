@@ -46,6 +46,7 @@ private def generate(day: AdventDay): Unit = {
   val codeFile = generateSolutionCodeFile(day)
   writeSolutionCode(day, codeFile)
   createEmptyInputFile(day)
+  addFileLinkToReadme(day)
 }
 
 private def generateSolutionCodeFile(day: AdventDay): String = readCodeTemplate() match {
@@ -53,4 +54,9 @@ private def generateSolutionCodeFile(day: AdventDay): String = readCodeTemplate(
   case None =>
     println(s"$RED❌ ERROR: Couldn't read code template.")
     ""
+}
+
+private def addFileLinkToReadme(day: AdventDay): Unit = {
+  val markdown = s"- [Day $day](/src/main/scala/adventofcode2023/solutions/day$day/Day$day.scala)\n"
+  writeToFile(Config.readmeDirectory, Config.readmeFilename, markdown, append = true)
 }

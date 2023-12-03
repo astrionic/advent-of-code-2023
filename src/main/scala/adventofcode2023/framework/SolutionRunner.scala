@@ -11,12 +11,12 @@ import scala.Console.{GREEN, RED, RESET}
 /**
  * File name for the first part
  */
-private def fileNamePart1(day: String): String = s"$day${Config.partOneSuffix}"
+private def filenamePart1(day: String): String = s"$day${Config.partOneSuffix}"
 
 /**
  * File name for the second part
  */
-private def fileNamePart2(day: String): String = s"$day${Config.partTwoSuffix}"
+private def filenamePart2(day: String): String = s"$day${Config.partTwoSuffix}"
 
 /**
  * Solves both parts by calling [[part1]] and [[part2]] and writes the solutions to output files. Also measures the
@@ -63,10 +63,10 @@ private def executeParts(
   println
 
   if(executePart == ExecutePart.One || executePart == ExecutePart.Both) {
-    execute(day, input, part1, fileNamePart1(day), 1, writeToFile)
+    execute(day, input, part1, filenamePart1(day), 1, writeToFile)
   }
   if(executePart == ExecutePart.Two || executePart == ExecutePart.Both) {
-    execute(day, input, part2, fileNamePart2(day), 2, writeToFile)
+    execute(day, input, part2, filenamePart2(day), 2, writeToFile)
   }
 }
 
@@ -77,7 +77,7 @@ private def executeParts(
  *   Puzzle input
  * @param solve
  *   The function that computes the solution
- * @param fileName
+ * @param filename
  *   File name to write to
  * @param partNumber
  *   Number of the part (1 or 2)
@@ -88,7 +88,7 @@ private def execute(
     day: AdventDay,
     input: String,
     solve: String => String,
-    fileName: String,
+    filename: String,
     partNumber: PartNumber,
     writeSolution: Boolean
 ): Unit = {
@@ -103,10 +103,10 @@ private def execute(
   println(s"$solution\n")
 
   if(writeSolution) {
-    writeSolutionToFile(fileName, solution)
+    writeSolutionToFile(filename, solution)
     println(s"$GREEN✅ Solution written to file.$RESET")
   } else {
-    readSolutionFromFile(fileName) match {
+    readSolutionFromFile(filename) match {
       case None     =>
       case Some("") =>
       case Some(expected) =>

@@ -49,4 +49,14 @@ private[framework] object Config {
    * Suffix used to identify files that are related to part 2.
    */
   val partTwoSuffix = "_2"
+
+  /**
+   * Directory where the README file is located
+   */
+  val readmeDirectory = "./"
+
+  /**
+   * README file name
+   */
+  val readmeFilename = "README.md"
 }
